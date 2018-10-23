@@ -68,6 +68,10 @@ class Game {
         char *GetPath(void) {
             return this->path;
         }
+		
+		char *GetName(void) {
+			return this->name;
+		}
 
         BOOLEAN IsEmpty(void) {
             if(!strcmp(this->path, "")) {return TRUE;}
@@ -170,7 +174,7 @@ int main(int argc, char **argv) {
     Game g("asd/qwe");
     Game h("ty/cvbn");
 	Game hh1("cvbbhgjkl");
-    Game hh2("cvbbhgjkl2");
+    Game hh2("cvb/bh/gjkl2");
     Game hhh("zaxcx/yui");
 
     GameNode *gn1 = new GameNode();
@@ -184,14 +188,14 @@ int main(int argc, char **argv) {
 	n.AddGame(hh2);
 	n.AddGame(hhh);
 
-    cout<<n.GetNode()->GetGame().GetPath()<<endl;
+    cout<<n.GetNode()->GetGame().GetPath()<< " - " << n.GetNode()->GetGame().GetName()<<endl;
     n.MoveNext();
-    cout<<n.GetNode()->GetGame().GetPath()<<endl;
+    cout<<n.GetNode()->GetGame().GetPath()<< " - " << n.GetNode()->GetGame().GetName()<<endl;
     n.MoveNext();
-    cout<<n.GetNode()->GetGame().GetPath()<<endl;
+    cout<<n.GetNode()->GetGame().GetPath()<< " - " << n.GetNode()->GetGame().GetName()<<endl;
     n.MoveNext();
-    cout<<n.GetNode()->GetGame().GetPath()<<endl;
+    cout<<n.GetNode()->GetGame().GetPath()<< " - " << n.GetNode()->GetGame().GetName()<<endl;
 	n.MoveNext();
-    cout<<n.GetNode()->GetGame().GetPath()<<endl;
+    cout<<n.GetNode()->GetGame().GetPath()<< " - " << n.GetNode()->GetGame().GetName()<<endl;
     return 0;
 }
