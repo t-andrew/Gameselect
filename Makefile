@@ -1,3 +1,7 @@
+# Makefile for Gameselect
+#
+#
+
 TARGET := GameSelect
 CXX :=g++
 CXXFLAGS :=-Wall -O3 -c
@@ -9,10 +13,9 @@ OBJ := $(patsubst %.cpp,%.o,$(SRC))
 OBJS := $(wildcard *.o)
 
 $(TARGET): $(OBJ)
-	$(LINKER) $@ $(OBJS)
+	$(LINKER) $@ *.o
 
 $(OBJ): $(SRC)
-	@echo "Compiling "@^" ..."
 	$(CXX) $(CXXFLAGS) $^
 
 .PHONY: clean
