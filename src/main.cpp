@@ -9,6 +9,8 @@
 #define TRUE 1
 #define FALSE 0
 
+//#define _DEBUGMODE
+
 using namespace std;
 
 typedef short RESULT;
@@ -24,8 +26,11 @@ class Game {
 
         Game(const char *path) {
             this->path = (char *) malloc(sizeof(char) * (strlen(path)+1));
+			if(this->path == NULL) {
+				cerr<<"Warning: Failed allocation"<<endl;
+			}
             strcpy(this->path, path);
-
+			
             //Set the name to the name of the executable
             char *lastSlash = strrchr(this->path, '/');
             if(lastSlash == NULL) {
@@ -33,16 +38,16 @@ class Game {
                 lastSlash = strrchr(this->path, '\\');
                 if(lastSlash == NULL) {
                     //No backslashes either. Just set the name to the path
-                    this->name = (char *) malloc(sizeof(char) * (strlen(path)+1));
+                    this->name = (char *) malloc(sizeof(char) * (strlen(path)+2));
                     strcpy(this->name, this->path);
                 } else {
                     lastSlash++; //No need to include the slash
-                    this->name = (char *) malloc(sizeof(char) * (strlen(lastSlash)+1));
+                    this->name = (char *) malloc(sizeof(char) * (strlen(lastSlash)+2));
                     strcpy(this->name, lastSlash);
                 }
             } else {
                 lastSlash++; //No need to include the slash
-                this->name = (char *) malloc(sizeof(char) * (strlen(lastSlash)+1));
+                this->name = (char *) malloc(sizeof(char) * (strlen(lastSlash)+2));
                 strcpy(this->name, lastSlash);
             }
         }
@@ -55,8 +60,9 @@ class Game {
         }
 
         ~Game() {
-            free(this->name);
-            free(this->path);
+			#ifdef _DEBUGMODE
+				cout<<"Warning! Game Object destroyed."<<endl;
+			#endif
         }
 
         char *GetPath(void) {
@@ -113,7 +119,6 @@ class GameList {
                 this->currentGame = this->currentGame->GetNext();
                 countGames++;
             }
-            countGames++; //Count the last game aswell
             this->lastGame = this->currentGame;
             this->currentGame = this->firstGame;
 
@@ -133,12 +138,20 @@ class GameList {
                 cout<<"Adding a game..."<<endl;
             #endif // _DEBUGMODE
 
-            GameNode *newGame;
+            GameNode *newGame = new GameNode();
             newGame->SetGame(game);
-            lastGame->SetNext(newGame);
-            newGame->SetNext(NULL);
-
+			newGame->SetNext(NULL);
+            this->lastGame->SetNext(newGame);
+			this->lastGame = newGame;
+			
+			///this->currentGame = this->firstGame;
+			
             this->currentCount++;
+			
+			#ifdef _DEBUGMODE
+                cout<<"Game with path: "<<game.GetPath()<<" added."<<endl;
+            #endif // _DEBUGMODE
+			
             return SUCCESS;
         }
 
@@ -156,26 +169,20 @@ int main(int argc, char **argv) {
 
     Game g("asd/qwe");
     Game h("ty/cvbn");
-    Game hh("cvbbhgjkl");
+	Game hh1("cvbbhgjkl");
+    Game hh2("cvbbhgjkl2");
     Game hhh("zaxcx/yui");
 
-    GameNode *gn1, *gn2, *gn3, *gn4;
-
-    gn1= new GameNode();
-    gn2= new GameNode();
-    gn3= new GameNode();
-    gn4= new GameNode();
+    GameNode *gn1 = new GameNode();
 
     gn1->SetGame(g);
-    gn1->SetNext(gn2);
-    gn2->SetGame(h);
-    gn2->SetNext(gn3);
-    gn3->SetGame(hh);
-    gn3->SetNext(gn4);
-    gn4->SetGame(hhh);
-    gn4->SetNext(NULL);
+    gn1->SetNext(NULL);
 
     GameList n(gn1);
+	n.AddGame(h);
+	n.AddGame(hh1);
+	n.AddGame(hh2);
+	n.AddGame(hhh);
 
     cout<<n.GetNode()->GetGame().GetPath()<<endl;
     n.MoveNext();
@@ -184,6 +191,7 @@ int main(int argc, char **argv) {
     cout<<n.GetNode()->GetGame().GetPath()<<endl;
     n.MoveNext();
     cout<<n.GetNode()->GetGame().GetPath()<<endl;
-
+	n.MoveNext();
+    cout<<n.GetNode()->GetGame().GetPath()<<endl;
     return 0;
 }
