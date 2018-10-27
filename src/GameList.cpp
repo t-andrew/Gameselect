@@ -1,5 +1,14 @@
 #include "GameList.h"
 
+
+GameList::GameList() {
+	this->firstGame = NULL;
+	this->currentGame = NULL;
+	this->lastGame = NULL;
+	
+	this->currentCount = 0;
+}
+
 GameList::GameList(GameNode *firstGame) {
     this->firstGame = firstGame;
     int countGames = 1;
@@ -27,12 +36,23 @@ RESULT GameList::AddGame(Game game) {
     #ifdef _DEBUGMODE
         std::cout<<"Adding a game..."<<std::endl;
     #endif // _DEBUGMODE
-
-    GameNode *newGame = new GameNode();
+	
+	GameNode *newGame = new GameNode();
     newGame->SetGame(game);
 	newGame->SetNext(NULL);
-    this->lastGame->SetNext(newGame);
-	this->lastGame = newGame;
+	
+	if(this->firstGame == NULL && this->currentCount == 0) {
+		//There were no games in the game list
+		//
+		this->firstGame = newGame;
+		this->currentGame = this->firstGame;
+		this->lastGame = this->currentGame;
+	}
+	else
+	{
+		this->lastGame->SetNext(newGame);
+		this->lastGame = newGame;
+	}
 
     this->currentCount++;
 	
@@ -41,6 +61,30 @@ RESULT GameList::AddGame(Game game) {
     #endif // _DEBUGMODE
 	
     return SUCCESS;
+}
+
+RESULT GameList::AddGame(const char *gamePath) {
+	GameNode *newGame = new GameNode();
+	Game game(gamePath);
+    newGame->SetGame(game);
+	newGame->SetNext(NULL);
+	
+	if(this->firstGame == NULL && this->currentCount == 0) {
+		//There were no games in the game list
+		//
+		this->firstGame = newGame;
+		this->currentGame = this->firstGame;
+		this->lastGame = this->currentGame;
+	}
+	else
+	{
+		this->lastGame->SetNext(newGame);
+		this->lastGame = newGame;
+	}
+
+    this->currentCount++;
+	
+	return SUCCESS;
 }
 
 GameNode *GameList::GetNode() {

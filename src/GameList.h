@@ -14,11 +14,13 @@ class GameList {
         GameNode *lastGame; //Keep track of the last game in the list too for now
 
     public:
+		GameList();
         GameList(GameNode *firstGame);
 
         unsigned short GetCurrentCount();
 
         RESULT AddGame(Game game);
+		RESULT AddGame(const char *gamePath);
 
         GameNode *GetNode();
 
