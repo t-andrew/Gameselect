@@ -27,6 +27,8 @@ class Game {
 		char *GetName(void);
 
         BOOLEAN IsEmpty(void);
+		
+		char *GetFilename(void);
 };
 
 #endif //_CLASS_GAME

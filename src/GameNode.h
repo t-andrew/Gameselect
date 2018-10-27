@@ -7,9 +7,10 @@ class GameNode {
     private:
         Game g;
         GameNode *nextG;
+		uid_size uId; //Assigned by GameList object. Unique id of node in the list.
 
     public:
-		GameNode();
+		GameNode(unsigned int);
 		
 		//Setters
         void SetNext(GameNode *gameNode);
@@ -18,6 +19,7 @@ class GameNode {
 		//Getters
         Game GetGame();
         GameNode *GetNext();
+		uid_size GetUID();
 };
 
 #endif //_CLASS_GAMENODE

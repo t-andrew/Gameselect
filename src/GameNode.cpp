@@ -1,6 +1,8 @@
 #include "GameNode.h"
 
-GameNode::GameNode() {};
+GameNode::GameNode(unsigned int uId) {
+	this->uId = uId;
+};
 
 void GameNode::SetNext(GameNode *gameNode) {
     this->nextG = gameNode;
@@ -16,4 +18,8 @@ Game GameNode::GetGame() {
 
 GameNode *GameNode::GetNext() {
     return this->nextG;
+}
+
+unsigned int GameNode::GetUID() {
+	return this->uId;
 }

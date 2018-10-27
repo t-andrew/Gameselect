@@ -8,5 +8,6 @@
 
 typedef short RESULT;
 typedef short BOOLEAN;
+typedef unsigned int uid_size;
 
 #endif //_TYPEDEFS

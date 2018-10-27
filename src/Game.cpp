@@ -1,5 +1,25 @@
 #include "Game.h"
 
+char *Game::GetFilename(void) {
+	
+	//Search for the last slash
+	char *lastSlash = strrchr(this->path, '/');
+	if(lastSlash == NULL) {
+		//No slash found. Maybe the path has backslashes
+		lastSlash = strrchr(this->path, '\\');
+		if(lastSlash == NULL) {
+			//No backslashes either. This should not be possible since the path
+			//is a valid absolute path.
+			return NULL;
+		}
+	}
+	
+	lastSlash++; //No need to include the slash
+	return lastSlash;
+	
+}
+
+
 Game::Game() {
 	this->path = NULL;
 	this->name = NULL;
@@ -16,25 +36,10 @@ Game::Game(const char *path) {
 		}
 		strcpy(this->path, path);
 		
-		//Set the name to the name of the executable
-		char *lastSlash = strrchr(this->path, '/');
-		if(lastSlash == NULL) {
-			//No slash found. Maybe the path has backslashes
-			lastSlash = strrchr(this->path, '\\');
-			if(lastSlash == NULL) {
-				//No backslashes either. Just set the name to the path
-				this->name = (char *) malloc(sizeof(char) * (strlen(path)+1));
-				strcpy(this->name, this->path);
-			} else {
-				lastSlash++; //No need to include the slash
-				this->name = (char *) malloc(sizeof(char) * (strlen(lastSlash)+1));
-				strcpy(this->name, lastSlash);
-			}
-		} else {
-			lastSlash++; //No need to include the slash
-			this->name = (char *) malloc(sizeof(char) * (strlen(lastSlash)+1));
-			strcpy(this->name, lastSlash);
-		}
+		char *name = this->GetFilename();
+		this->name = (char *) malloc(sizeof(char) * (strlen(name)+1));
+		strcpy(this->name, name);
+		
 	}
 }
 

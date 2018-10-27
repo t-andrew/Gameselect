@@ -7,9 +7,12 @@ GameList::GameList() {
 	this->lastGame = NULL;
 	
 	this->currentCount = 0;
+	this->lastUID = 0;
 }
 
+/* DEPRECATED
 GameList::GameList(GameNode *firstGame) {
+	
     this->firstGame = firstGame;
     int countGames = 1;
 
@@ -27,6 +30,7 @@ GameList::GameList(GameNode *firstGame) {
     #endif
 
 }
+*/
 
 unsigned short GameList::GetCurrentCount() {
     return this->currentCount;
@@ -37,7 +41,9 @@ RESULT GameList::AddGame(Game game) {
         std::cout<<"Adding a game..."<<std::endl;
     #endif // _DEBUGMODE
 	
-	GameNode *newGame = new GameNode();
+	lastUID++;
+	
+	GameNode *newGame = new GameNode(lastUID);
     newGame->SetGame(game);
 	newGame->SetNext(NULL);
 	
@@ -64,7 +70,9 @@ RESULT GameList::AddGame(Game game) {
 }
 
 RESULT GameList::AddGame(const char *gamePath) {
-	GameNode *newGame = new GameNode();
+	lastUID++;
+	
+	GameNode *newGame = new GameNode(lastUID);
 	Game game(gamePath);
     newGame->SetGame(game);
 	newGame->SetNext(NULL);
@@ -89,6 +97,29 @@ RESULT GameList::AddGame(const char *gamePath) {
 
 GameNode *GameList::GetNode() {
     return this->currentGame;
+}
+
+GameNode *GameList::GetNode(uid_size id) {
+	if(id > this->currentCount) {
+		throw "Out of bounds";
+	}
+	
+	this->currentGame = this->firstGame;
+	while(this->currentGame->GetUID() != id && this->currentGame->GetUID() < id) {
+		this->MoveNext();	
+	}
+	
+	if(this->currentGame->GetUID() == id) {
+		return this->currentGame;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+unsigned int GameList::GetLastUID() {
+	return this->lastUID;
 }
 
 void GameList::MoveNext() {
