@@ -11,9 +11,7 @@ using namespace std;
 int main(int argc, char **argv) {
 
     GameList n;
-	n.AddGame("C:/game.exe");
-	n.AddGame("D:/games/cool.exe");
-	n.AddGame("D:/games/hot.exe");
+	n.AddGame("D:\\Games\\Duke Nukem Forever\\System\\DukeForever.exe");
 
     cout<<n.GetNode()->GetGame().GetPath()<< " - " << n.GetNode()->GetGame().GetName()<<endl;
     n.MoveNext();

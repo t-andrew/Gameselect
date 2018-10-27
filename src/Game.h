@@ -3,6 +3,7 @@
 
 
 #include <iostream>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 
@@ -13,6 +14,8 @@ class Game {
         char *name; //Name of the game
         char *path; //Path to executable file of the game
 
+		BOOLEAN IsPathValid(const char *);
+				
     public:
 		Game();
         Game(const char *);

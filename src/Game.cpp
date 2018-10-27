@@ -11,6 +11,9 @@ Game::Game(const char *path) {
 		std::cerr<<"Warning: Failed allocation"<<std::endl;
 		this->name = NULL;
 	} else {
+		if(this->IsPathValid(path) == FALSE) {
+			throw "Path is invalid or inaccessible";
+		}
 		strcpy(this->path, path);
 		
 		//Set the name to the name of the executable
@@ -41,6 +44,9 @@ Game::Game(const char *path, const char *name) {
     this->name = (char *) malloc(sizeof(char) * (strlen(name)+1));
 	
 	if(this->path != NULL && this->name != NULL) {
+		if(this->IsPathValid(path) == FALSE) {
+			throw "Path is invalid or inaccessible";
+		}
 		strcpy(this->path, path);
 		strcpy(this->name, name);
 	} else {
@@ -68,5 +74,15 @@ BOOLEAN Game::IsEmpty(void) {
     else return FALSE;
 }
 
-
+BOOLEAN Game::IsPathValid(const char *path) {
+	FILE *fp;
+	
+	fp = fopen(path, "r");
+	if(fp == NULL)
+		return FALSE;
+	
+	//Path is valid
+	fclose(fp);
+	return TRUE;
+}	
 
