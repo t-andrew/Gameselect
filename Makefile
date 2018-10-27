@@ -1,6 +1,5 @@
 # Makefile for Gameselect
 #
-#
 
 TARGET := GameSelect
 CXX :=g++
@@ -10,13 +9,14 @@ LINKER := g++ -o
 SRCDIR := src
 SRC := $(wildcard $(SRCDIR)/*.cpp)
 OBJ := $(patsubst %.cpp,%.o,$(SRC))
-OBJS := $(wildcard *.o)
+
+all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(LINKER) $@ *.o
+	$(LINKER) $@ $(SRCDIR)/*.o
 
-$(OBJ): $(SRC)
-	$(CXX) $(CXXFLAGS) $^
+%o: %c
+	$(CXX) $(CXXFLAGS) $(SRCDIR)/$<
 
 .PHONY: clean
 clean:
