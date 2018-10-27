@@ -14,7 +14,7 @@ class Game {
         char *name; //Name of the game
         char *path; //Path to executable file of the game
 
-		BOOLEAN IsPathValid(const char *);
+		_BOOLEAN IsPathValid(const char *);
 				
     public:
 		Game();
@@ -26,7 +26,7 @@ class Game {
         char *GetPath(void);
 		char *GetName(void);
 
-        BOOLEAN IsEmpty(void);
+        _BOOLEAN IsEmpty(void);
 		
 		char *GetFilename(void);
 };

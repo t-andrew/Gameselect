@@ -74,12 +74,12 @@ char *Game::GetName(void) {
 	return this->name;
 }
 
-BOOLEAN Game::IsEmpty(void) {
+_BOOLEAN Game::IsEmpty(void) {
     if(this->path==NULL) {return TRUE;}
     else return FALSE;
 }
 
-BOOLEAN Game::IsPathValid(const char *path) {
+_BOOLEAN Game::IsPathValid(const char *path) {
 	FILE *fp;
 	
 	fp = fopen(path, "r");

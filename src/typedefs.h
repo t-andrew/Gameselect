@@ -7,7 +7,7 @@
 #define FALSE 0
 
 typedef short RESULT;
-typedef short BOOLEAN;
+typedef short _BOOLEAN;
 typedef unsigned int uid_size;
 
 #endif //_TYPEDEFS
