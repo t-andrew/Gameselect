@@ -1,6 +1,6 @@
 #include "GameNode.h"
 
-GameNode::GameNode() : g("") {}
+GameNode::GameNode() {};
 
 void GameNode::SetNext(GameNode *gameNode) {
     this->nextG = gameNode;

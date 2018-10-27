@@ -14,6 +14,7 @@ class Game {
         char *path; //Path to executable file of the game
 
     public:
+		Game();
         Game(const char *);
         Game(const char *, const char *);
         ~Game();

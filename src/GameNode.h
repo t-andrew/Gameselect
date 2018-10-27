@@ -9,8 +9,8 @@ class GameNode {
         GameNode *nextG;
 
     public:
-        GameNode();
-	
+		GameNode();
+		
 		//Setters
         void SetNext(GameNode *gameNode);
         void SetGame(Game g);
